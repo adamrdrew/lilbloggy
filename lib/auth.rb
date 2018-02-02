@@ -2,7 +2,7 @@ require 'sequel'
 require 'sqlite3'
 require 'securerandom'
 
-DB = Sequel.sqlite('data/auth.data')
+DB = Sequel.sqlite('data/auth.db')
 
 class DuplicateUserException < StandardError
 end
@@ -14,16 +14,10 @@ class UserNotFoundException < StandardError
 end
 
 class AuthToken < Sequel::Model
-    plugin :schema
 
-    set_schema do
-        varchar :uuid, :unqiue => true, :empty => false
-        varchar :name, :unique => true, :empty => false
-        varchar :hash
-        varhcar :salt
+    def self.find(uuid)
+        AuthToken.where(Sequel.ilike(:uuid, uuid)).all.first
     end
-    
-    create_table unless table_exists?
 
     def self.new_token(name,salt,hash)
         raise DuplicateUserException if self.user_exists?(name)
