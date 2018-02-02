@@ -1,8 +1,3 @@
-require 'sequel'
-require 'sqlite3'
-require 'securerandom'
-
-DB = Sequel.sqlite('data/auth.db')
 
 class DuplicateUserException < StandardError
 end

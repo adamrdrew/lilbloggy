@@ -1,6 +1,6 @@
 Sequel.migration do
   change do
-    create_table :user do
+    create_table :users do
       primary_key :pk
       String :uuid, unique: true, null: false
       String :name, unique: true, null: false
