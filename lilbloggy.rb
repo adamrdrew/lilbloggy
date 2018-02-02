@@ -12,7 +12,7 @@ class LilBloggy < Sinatra::Base
     helpers Sinatra::Cookies
 
     configure do
-        DB = Sequel.sqlite('data/auth.db')
+        DB = Sequel.sqlite('data/lilbloggy.db')
     end
 
     get "/" do
