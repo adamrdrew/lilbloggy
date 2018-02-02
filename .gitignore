@@ -1,3 +1,4 @@
 .vueck_cache
 vendor
 .sass-cache
+data/*.db
