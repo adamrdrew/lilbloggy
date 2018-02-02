@@ -5,7 +5,8 @@ task :deploy do
 end
 
 task :migrations do
-	sh "bundler exec sequel -m migrations/  sqlite://data/auth.db"
+    sh "bundler exec sequel -m migrations/auth/  sqlite://data/auth.db"
+    sh "bundler exec sequel -m migrations/user/  sqlite://data/auth.db"
 end
 
 task :run do
