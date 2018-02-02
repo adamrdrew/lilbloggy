@@ -1,0 +1,28 @@
+{
+  "name": "lilbloggy",
+  "authors": [
+    "Adam Drew <adamrdrew@live.com>"
+  ],
+  "description": "An itty-bitty teenie-weenie tinny-little blogging app!",
+  "main": "lilbloggy.rb",
+  "keywords": [
+    "blog"
+  ],
+  "license": "GPL3",
+  "homepage": "www.adamrdrew.com",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "vue": "^2.5.13",
+    "vue-router": "^3.0.1",
+    "vuex": "^3.0.1",
+    "bootstrap": "^4.0.0",
+    "moment": "^2.20.1"
+  }
+}

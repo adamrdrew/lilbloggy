@@ -2,3 +2,4 @@
 vendor
 .sass-cache
 data/*.db
+public/bower_components
