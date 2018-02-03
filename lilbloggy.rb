@@ -64,7 +64,7 @@ class LilBloggy < Sinatra::Base
         return json({:auth => true})
     end
 
-    get '/?' do
+    get "/*" do
         slim :index
     end
 end
