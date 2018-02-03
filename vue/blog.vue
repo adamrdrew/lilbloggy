@@ -1,106 +1,40 @@
 <component name="blog">
 <template lang="slim">
-.col-md-4.col-md-offset-4
-    .panel.panel-default
-        .panel-heading.panel-heading-pink
-            h3.panel-title Log In
-        .panel-body
-            .form-group
-                label User Name
-                input.form-control placeholder="cool_user_1982" type="text" v-model="name"
-                .alert.alert-danger v-if="!name_is_valid"  That\'s not a valid username.
-            .form-group
-                label Password
-                input.form-control v-model="password" @keyup.enter="submit"  type="password"
-        .panel-footer.clearfix
-            button.btn.btn-success.pull-right v-bind:disabled="!can_submit" v-on:click="submit"  Log In
+.container-fluid
+    .row
+        .col-md-7.offset-md-1
+            post v-for="post in posts" :post="post" :key="post.id"
+        .col-md-3
+            .card.position-fixed
+                .card-body 
+                    p Hello World
 </template>
 
 <script>
-    data: function() {
-        return {name: "",
-                password: "",
-                salt: "",
-                hash: "",
-                uuid: ""
-                }
-    },
-    methods: {
-        submit: function() {
-            if (!this.can_submit) return;
-            this.can_submit = false;
-            this.get_salt_and_uuid();
-
-        },
-        get_salt_and_uuid: function() {
-            $.ajax({
-                method: 'POST',
-                url: '/api/auth_handshake',
-                dataType : "json",
-                contentType: "application/json; charset=utf-8",
-                context: this,
-                data: JSON.stringify({name: this.name}),
-                cache: false,
-                success: function(result) {
-                    this.salt = result.salt;
-                    this.perform_auth();
-                },
-                error: function(result) {
-                    this.$dispatch('login', false);
-                    alert('Username or password not recognized');
-                }
-            });
-        },
-        perform_auth: function() {
-            var auth_payload = this.auth_payload;
-            $.ajax({
-                method: 'POST',
-                url: '/api/auth_user',
-                dataType : "json",
-                contentType: "application/json; charset=utf-8",
-                context: this,
-                cache: false,
-                data: JSON.stringify(auth_payload),
-                success: function(result) {
-                    this.uuid = result.uuid;
-                    this.$dispatch('login', true);
-                    this.$route.router.go('home');
-                },
-                error: function(result) {
-                    this.$dispatch('login', false);
-                    alert('Username or password not recognized');
-                }
-            });           
-        }
-    },
-    computed: {
-        'name_is_valid': function() {
-            return !/[^a-zA-Z0-9\-\\_\/]/.test(this.name);
-        },
-        'pw_is_valid': function() {
-            if (this.password.length < 8 ) {
-                return false;
-            };
-            return true;
-        },
-        'can_submit': function() {
-            if (this.name_is_valid && this.pw_is_valid) return true;
-            return false;
-        },
-        'auth_payload': function() {
-            var hasher = new jsSHA("SHA-512", "TEXT");
-            hasher.update(this.password+this.salt);
-            this.hash = hasher.getHash("HEX");
-            return {name: this.name, hash: this.hash};
-        }
-
+data: function() {
+    return {
+        posts: [
+            {title: "This is a post", body: "This is a super great post!", id:123, image: "http://4.bp.blogspot.com/-dsGVHCka_Vw/T9tG6vYsh2I/AAAAAAAAAkM/ztGXwGbApkA/s1600/david-bowie-001.jpg"},
+            {title: "This is a an olderpost", body: "This was a super great post!", id:122},
+            {title: "This is a post", body: "This is a super great post!", id:123, image: "http://4.bp.blogspot.com/-dsGVHCka_Vw/T9tG6vYsh2I/AAAAAAAAAkM/ztGXwGbApkA/s1600/david-bowie-001.jpg"},
+            {title: "This is a post", body: "This is a super great post!", id:123, image: "http://4.bp.blogspot.com/-dsGVHCka_Vw/T9tG6vYsh2I/AAAAAAAAAkM/ztGXwGbApkA/s1600/david-bowie-001.jpg"},
+            {title: "This is a an olderpost", body: "This was a super great post!", id:122},
+            {title: "This is a an olderpost", body: "This was a super great post!", id:122},
+            {title: "This is a post", body: "This is a super great post!", id:123, image: "http://4.bp.blogspot.com/-dsGVHCka_Vw/T9tG6vYsh2I/AAAAAAAAAkM/ztGXwGbApkA/s1600/david-bowie-001.jpg"},
+            {title: "This is a an olderpost", body: "This was a super great post!", id:122},
+            {title: "This is a post", body: "This is a super great post!", id:123, image: "http://4.bp.blogspot.com/-dsGVHCka_Vw/T9tG6vYsh2I/AAAAAAAAAkM/ztGXwGbApkA/s1600/david-bowie-001.jpg"},
+            {title: "This is a post", body: "This is a super great post!", id:123, image: "http://4.bp.blogspot.com/-dsGVHCka_Vw/T9tG6vYsh2I/AAAAAAAAAkM/ztGXwGbApkA/s1600/david-bowie-001.jpg"},
+            {title: "This is a an olderpost", body: "This was a super great post!", id:122},
+            {title: "This is a an olderpost", body: "This was a super great post!", id:122},
+            {title: "This is a post", body: "This is a super great post!", id:123, image: "http://4.bp.blogspot.com/-dsGVHCka_Vw/T9tG6vYsh2I/AAAAAAAAAkM/ztGXwGbApkA/s1600/david-bowie-001.jpg"},
+            {title: "This is a an olderpost", body: "This was a super great post!", id:122}
+        ]    
     }
-</script>
-
-<style>
-.adam {
-    color: red;
+},
+methods: {
+},
+computed: {
 }
-</style>
+</script>
 
 </component>

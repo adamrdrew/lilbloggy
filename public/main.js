@@ -1,6 +1,6 @@
 var routes = [
     {name: "login", path: '/login', component: login_form},
-    {path: "/", redirect: "/search"}
+    {name: "blog", path: '/', component: blog}
 ]
 
 var router = new VueRouter({
