@@ -1,5 +1,5 @@
 require 'vueck'
-require './test'
+require './lilbloggy'
 require 'pry'
 
 use VueCK::Plugin
