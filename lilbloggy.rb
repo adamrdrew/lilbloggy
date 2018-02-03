@@ -5,22 +5,17 @@ require 'slim'
 require 'sequel'
 require 'sqlite3'
 require 'securerandom'
-require 'lib/blog.rb'
-require 'lib/post.rb'
-require 'lib/page.rb'
-require 'lib/auth.rb'
-require 'lib/user.rb'
+
+DB = Sequel.sqlite('data/lilbloggy.db')
+require './lib/blog'
+require './lib/post'
+require './lib/page'
+require './lib/auth'
+require './lib/user'
 
 class LilBloggy < Sinatra::Base
     helpers Sinatra::Cookies
-
-    configure do
-        DB = Sequel.sqlite('data/lilbloggy.db')
-    end
-
-    get "/" do
-    end
-
+    
     get '/api/get_user' do
         raise NotAuthorizedException unless cookies[:uuid]
         user_hash = AuthToken.find(cookies[:uuid]).to_hash
@@ -62,11 +57,14 @@ class LilBloggy < Sinatra::Base
         token = AuthToken.new_token(j['name'], j['salt'], j['hash'])
         cookies[:uuid] = token[:uuid]
         cookies[:name] = token[:name]
-        #new_user = User.new()
-        #new_user.name = cookies[:name]
-        #new_user.uuid = cookies[:uuid]
-        #new_user.save
+        new_user = User.new()
+        new_user.name = cookies[:name]
+        new_user.uuid = cookies[:uuid]
+        new_user.save
         return json({:auth => true})
     end
 
+    get '/?' do
+        slim :index
+    end
 end
