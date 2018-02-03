@@ -7,11 +7,11 @@
         .panel-body
             .form-group
                 label User Name
-                input.form-control placeholder="cool_user_1982" type="text" v-model="name" v-on:keyup="validate_name"
+                input.form-control placeholder="cool_user_1982" type="text" v-model="name"
                 .alert.alert-danger v-if="!name_is_valid"  That\'s not a valid username.
             .form-group
                 label Password
-                input v-model="password" @keyup.enter="submit" v-on:keyup="validate_pass" type="password" class="form-control"
+                input.form-control v-model="password" @keyup.enter="submit"  type="password"
         .panel-footer.clearfix
             button.btn.btn-success.pull-right v-bind:disabled="!can_submit" v-on:click="submit"  Log In
 </template>
@@ -97,5 +97,10 @@
     }
 </script>
 
+<style>
+.adam {
+    color: red;
+}
+</style>
 
 </component>
