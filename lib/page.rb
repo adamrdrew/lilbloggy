@@ -1,5 +1,2 @@
-module LilBloggy
-    class Post
-
-    end
+class Page
 end

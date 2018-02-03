@@ -1,5 +1,2 @@
-module LilBloggy
-    class Blog
-
-    end
+class Blog
 end
