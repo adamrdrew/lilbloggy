@@ -1,13 +1,3 @@
-
-class DuplicateUserException < StandardError
-end
-
-class WrongPasswordException < StandardError
-end
-
-class UserNotFoundException < StandardError
-end
-
 class AuthToken < Sequel::Model
 
     def self.find(uuid)
