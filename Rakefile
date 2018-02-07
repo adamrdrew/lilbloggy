@@ -9,7 +9,7 @@ task :migrations do
 end
 
 task :run do
-	sh "bundler exec rackup -o 0.0.0.0 -p 2323"
+	sh "bundler exec rerun 'rackup -o 0.0.0.0 -p 2323'"
 end
 
 task :new_vue do
