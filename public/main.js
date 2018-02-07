@@ -1,6 +1,7 @@
 var routes = [
-    {name: "login", path: '/login', component: login_form},
-    {name: "blog", path: '/', component: blog}
+    {name: "login",  path: '/login',         component: login_form},
+    {name: "signup", path: '/signup',        component: signup_form},
+    {name: "blog",   path: '/blog/:postid?', component: blog}
 ]
 
 var router = new VueRouter({
@@ -10,11 +11,17 @@ var router = new VueRouter({
 
 var store = new Vuex.Store({
     state: {
-        data: [],
+        config: {}
     },
     getters: {
+        signup_enabled: state => { 
+            return state.config.signup_enabled
+        }
     },
     mutations: {
+        config (state, config) {
+            state.config = config
+        }
     }
 });
 
@@ -25,6 +32,16 @@ var app = new Vue({
     data: {
     },
     methods: {
-
-     }
+        get_config: function() {
+            XHR({
+                method: 'GET',
+                url: "/config"
+            }).success(function (data) {
+                this.$store.commit('config', data)
+            }.bind(this));
+        }
+    },
+    mounted: function() {
+        this.get_config();
+    }
 });
