@@ -8,3 +8,4 @@ gem "sequel"
 gem "sqlite3"
 gem "facets"
 gem "sinatra-contrib"
+gem 'rerun'
