@@ -22,7 +22,6 @@
             password: "",
             salt: "",
             hash: "",
-            uuid: ""
         }
     },
     methods: {
@@ -51,7 +50,7 @@
                 url: "/user/auth",
                 data: JSON.stringify(auth_payload)
             }).success(function (data) {
-                this.uuid = data.uuid;
+                this.$store.commit('user', {name: this.name, uuid: data.uuid})
             }.bind(this)).error(function(data){
                 this.login_error();
             }.bind(this));          

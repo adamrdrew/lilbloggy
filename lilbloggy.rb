@@ -23,10 +23,9 @@ class LilBloggy < Sinatra::Base
         return json Config::APPCONFIG
     end
     
-    get '/api/get_user' do
+    get '/user/get' do
         raise NotAuthorizedException unless cookies[:uuid]
         user_hash = AuthToken.find(cookies[:uuid]).to_hash
-        user_hash[:uuid] = cookies[:uuid]
         return json user_hash
     end
 
