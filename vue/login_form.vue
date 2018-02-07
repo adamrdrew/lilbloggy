@@ -26,41 +26,35 @@
         }
     },
     methods: {
+        login_error: function() {
+            alert('Username or password not recognized');
+        },
         submit: function() {
-            if (!this.can_submit) return;
-            this.can_submit = false;
             this.get_salt_and_uuid();
-
         },
         get_salt_and_uuid: function() {
             XHR({
                 method: 'POST',
-                url: "/auth/handshake"
+                url: "/user/auth/handshake",
+                data: JSON.stringify({name: this.name})
             }).success(function (data) {
                 this.salt = data.salt;
                 this.perform_auth();
+            }.bind(this)).error(function(e){
+                this.login_error();
             }.bind(this));
         },
         perform_auth: function() {
             var auth_payload = this.auth_payload;
-            $.ajax({
+            XHR({
                 method: 'POST',
-                url: '/api/auth_user',
-                dataType : "json",
-                contentType: "application/json; charset=utf-8",
-                context: this,
-                cache: false,
-                data: JSON.stringify(auth_payload),
-                success: function(result) {
-                    this.uuid = result.uuid;
-                    this.$dispatch('login', true);
-                    this.$route.router.go('home');
-                },
-                error: function(result) {
-                    this.$dispatch('login', false);
-                    alert('Username or password not recognized');
-                }
-            });           
+                url: "/user/auth",
+                data: JSON.stringify(auth_payload)
+            }).success(function (data) {
+                this.uuid = data.uuid;
+            }.bind(this)).error(function(data){
+                this.login_error();
+            }.bind(this));          
         }
     },
     computed: {

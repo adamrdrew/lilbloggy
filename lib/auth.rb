@@ -21,7 +21,8 @@ class AuthToken < Sequel::Model
     end
 
     def self.get_user_salt(name)
-        token = AuthToken.where(Sequel.ilike(:name, name)).all.first
+        user  = AuthToken.where(Sequel.ilike(:name, name)).all.first
+        token = {salt: user.salt}
         raise UserNotFoundException unless token
         token_hash = token.to_hash
         token_hash.delete(:hash)

@@ -39,18 +39,18 @@ class LilBloggy < Sinatra::Base
         return json({success: true})
     end
 
-    post'/auth/handshake' do
+    post'/user/auth/handshake' do
         name = JSON.parse(request.body.read)['name']
         auth_deets = AuthToken.get_user_salt(name)
         return json auth_deets
     end
 
-    post '/api/auth_user' do
+    post '/user/auth' do
         j = JSON.parse(request.body.read)
         token = AuthToken.auth_user(j['name'], j['hash']);
         cookies[:uuid] = token[:uuid]
         cookies[:name] = token[:name]    
-        return json({uuid: token['uuid']})
+        return json({uuid: token[:uuid]})
     end
 
     post '/user/check_name' do
